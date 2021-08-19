@@ -1,0 +1,7 @@
+.idea
+.env
+.env.dev
+*.pid
+*.mo
+*.py[cod]
+celerybeat-schedule
