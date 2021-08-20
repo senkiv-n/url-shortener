@@ -4,6 +4,7 @@ from rest_framework import status
 
 from model_mommy.recipe import Recipe
 from app.pkg.shortener.models import ShortenedUrl
+from app.pkg.shortener.services import ShortedUrlService
 
 
 class ShortenerTestCase(APITestCase):
@@ -14,11 +15,25 @@ class ShortenerTestCase(APITestCase):
     url = 'https://www.google.com.ua/'
     url2 = 'https://www.amazon.com/'
     url3 =  'https://www.google.com.ua/test/'
+    big_url = 'https://www.google.com/search?q=django&oq=django&aqs=chrome..69i57j69i59l2j69i60j69i61j69i60j' \
+    '69i65j69i60.1317j0j7&sourceid=chrome&ie=UTF-8'
 
     def test_create_shortener_url_201(self):
         response = self.client.post(self.create_shortener_url, data={'url': self.url})
         self.assertTrue(len(response.data['shortened_url']) > 0)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.json())
+
+    def test_create_from_big_url_201(self):
+        response = self.client.post(self.create_shortener_url, data={'url': self.big_url})
+        self.assertTrue(len(response.data['shortened_url']) > 0)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.json())
+
+    def test_follow_url(self):
+        ShortedUrlService.create_shorted_url(self.big_url)
+        url = ShortenedUrl.objects.get(url=self.big_url).shortened_url
+        r = self.client.get(url)
+        self.assertEqual(r.headers['LOCATION'], self.big_url)
+        self.assertEqual(r.status_code, status.HTTP_302_FOUND)
 
     def test_create_shortener_invalid_url_400(self):
         response = self.client.post(self.create_shortener_url, data={'url': 'sdklfj'})
@@ -39,4 +54,4 @@ class ShortenerTestCase(APITestCase):
         response = self.client.get(self.most_popular_urls)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data.count(), 2)
+        self.assertEqual(len(response.data['results']), 2)

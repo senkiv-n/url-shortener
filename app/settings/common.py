@@ -166,3 +166,5 @@ REST_FRAMEWORK = {
 }
 
 SHORT_URL_LENGTH = 8
+
+URL_PROTOCOL = 'http://' if DEBUG else 'https://'

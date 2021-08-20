@@ -13,18 +13,25 @@ from .env file configuration:
 
     (source .env && eval "echo \"$(cat tools/sql/create_db.sql)\"") | psql
 
+#### Create virtual environment
+
+    vitrualenv venv -p python3
+
+activate virtual environment 
+
+    source venv/bin/activate
+
 #### Install requirements
 
     pip install -r requirements.txt
 
 or  
 
-Docker-compose
+#### Docker-compose
 
     docker-compose up --build
 
-
-run migrations
+#### Run migrations
     
     python manage.py migrate
 
@@ -32,7 +39,7 @@ or via docker
 
     docker-compose exec web python manage.py migrate
 
-create superuser
+#### Create superuser
 
     python manage.py createsuperuser
 
@@ -40,13 +47,22 @@ or via docker
 
     docker-compose exec web createsuperuser
 
-in admin app http://127.0.0.1:8000/admin/sites/site/ add local site
+#### In admin app http://127.0.0.1:8000/admin/sites/site/ add your local domain
 
-    http://127.0.0.1:8000/
+    127.0.0.1:8000
 
-swagger endpoint http://127.0.0.1:8000/docs/
+#### Run tests
+
+    python manage.py test
+
+or via docker 
+
+    docker-compose exec web python manage.py test
 
 
-###for endpoint /shortener url shoud starts with http:// or https:// like: https://www.helloworld.com
+#### Swagger endpoint http://127.0.0.1:8000/docs/
+
+
+#### For endpoint /shortener url shoud starts with http:// or https:// like: https://www.helloworld.com
 
 If you need to scale service, you can set up extra instances of apps and configure load balancer to use them all.

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
@@ -17,7 +18,7 @@ class ShortenedUrl(models.Model):
         return self.shortened_url + _(' from ') + self.url
 
     def _shortened_url(self):
-        return Site.objects.get_current().domain + str(self.short_path)
+        return settings.URL_PROTOCOL + Site.objects.get_current().domain + '/' + str(self.short_path)
 
     shortened_url = property(_shortened_url)
 
