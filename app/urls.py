@@ -21,6 +21,9 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from app.pkg.shortener.api.views import RedirectUrlView
+
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Url Shortener API",
@@ -31,12 +34,10 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-api_patterns = [
-]
-
 urlpatterns = [
-    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('api/', include(api_patterns)),
+    path('api/', include('app.pkg.shortener.api.urls')),
+    path('<str:shortened_path>', RedirectUrlView.as_view(), name='redirect'),
     path('admin/', admin.site.urls),
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
