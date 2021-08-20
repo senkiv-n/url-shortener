@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='ShortenedUrl',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('url', models.URLField(verbose_name='original url')),
+                ('url', models.URLField(verbose_name='original url', max_length=512)),
                 ('short_path', models.CharField(db_index=True, max_length=15, unique=True, verbose_name='short url')),
                 ('domain', models.CharField(max_length=50, verbose_name='domain from url')),
             ],

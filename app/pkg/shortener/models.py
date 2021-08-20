@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 
 
 class ShortenedUrl(models.Model):
-    url = models.URLField(_('original url'))
+    url = models.URLField(_('original url'), max_length=512)
     short_path = models.CharField(_('short url'), max_length=15, db_index=True, unique=True)
     domain = models.CharField(_('domain from url'), max_length=50)
 

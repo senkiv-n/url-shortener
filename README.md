@@ -17,15 +17,36 @@ from .env file configuration:
 
     pip install -r requirements.txt
 
-## or
+or  
 
-### Docker-compose
+Docker-compose
 
     docker-compose up --build
 
-run migrations 
+
+run migrations
+    
+    python manage.py migrate
+
+or via docker
 
     docker-compose exec web python manage.py migrate
 
+create superuser
+
+    python manage.py createsuperuser
+
+or via docker
+
+    docker-compose exec web createsuperuser
+
+in admin app http://127.0.0.1:8000/admin/sites/site/ add local site
+
+    http://127.0.0.1:8000/
+
+swagger endpoint http://127.0.0.1:8000/docs/
+
+
+###for endpoint /shortener url shoud starts with http:// or https:// like: https://www.helloworld.com
 
 If you need to scale service, you can set up extra instances of apps and configure load balancer to use them all.
