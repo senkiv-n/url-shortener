@@ -17,17 +17,15 @@ from .env file configuration:
 
     pip install -r requirements.txt
 
-##or
+## or
 
-###Docker-compose
+### Docker-compose
 
     docker-compose up --build
 
 run migrations 
 
     docker-compose exec web python manage.py migrate
-
-
 
 
 If you need to scale service, you can set up extra instances of apps and configure load balancer to use them all.
