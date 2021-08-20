@@ -40,6 +40,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 
 THIRD_PARTY_APPS = [
@@ -47,7 +48,9 @@ THIRD_PARTY_APPS = [
     'drf_yasg',
 ]
 
-PROJECT_APPS = []
+PROJECT_APPS = [
+    'app.pkg.shortener',
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
@@ -89,7 +92,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('POSTGRES_NAME'),
+        'NAME': os.getenv('POSTGRES_DB'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
@@ -160,5 +163,8 @@ SWAGGER_SETTINGS = {
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 20,
-    'EXCEPTION_HANDLER': 'app.pkg.common.handlers.api_exception_handler'
 }
+
+SHORT_URL_LENGTH = 8
+
+URL_PROTOCOL = 'http://' if DEBUG else 'https://'
