@@ -26,4 +26,3 @@ class ShortenedCountSerializer(serializers.Serializer):
 
 class MostPopularSerializer(serializers.Serializer):
     domain = serializers.CharField()
-    domain_count = serializers.IntegerField()
